@@ -16,8 +16,20 @@ module.exports = {
     },
 
     async store (req, res) {
-        const product = Product.create(req.body);
+        const product = await Product.create(req.body);
 
         return res.json(product);
     },
+
+    async update (req, res) {
+        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+        return res.json(product);
+    },
+
+    async destroy (req, res) {
+        await Product.findByIdAndRemove(req.params.id);
+
+        return res.send();
+    }
 }
